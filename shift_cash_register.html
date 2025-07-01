@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>Ταμείο Βάρδιας Βενζινάδικου</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+</head>
+<body>
+  <h2>Καταγραφή Ταμείου Βάρδιας</h2>
+
+  <div class="section">
+    <label>Ονόματα</label>
+    <input type="text" id="employees">
+    <label>Ημερομηνία</label>
+    <input type="date" id="date">
+  </div>
+
+  <div class="section">
+    <label>Πωλήσεις Λαδιών (€)</label>
+    <div id="oilList"></div>
+    <button onclick="addItem('oilList')">+ Προσθήκη</button>
+	<br><br><br>
+    <label>Πωλήσεις Αξεσουάρ (€)</label>
+    <div id="accessoryList"></div>
+    <button onclick="addItem('accessoryList')">+ Προσθήκη</button>
+  </div>
+
+  <div class="section">
+    <label>Πελάτες Πίστωσης / Πινακίδα / Ποσό</label>
+    <div id="creditTripleList"></div>
+    <button onclick="addCreditTriple()">+ Προσθήκη</button>
+  </div>
+
+  <div class="section">
+    <label>Έξοδα Από Ταμείο</label>
+    <div id="expensesList"></div>
+    <button onclick="addItem('expensesList', true)">+ Προσθήκη</button>
+	<br><br><br>
+    <label>Εισπράξεις Από Πελάτες</label>
+    <div id="collectionsList"></div>
+    <button onclick="addItem('collectionsList', true)">+ Προσθήκη</button>
+  </div>
+
+  <button onclick="generateReport()">Δημιουργία Αναφοράς</button>
+  <button class="print-btn" onclick="window.print()">Εκτύπωση</button>
+  <button class="reset-btn" onclick="resetShift()">Νέα Βάρδια</button>
+
+  <div class="section">
+    <h3>Αναφορά Βάρδιας</h3>
+    <pre id="report"></pre>
+  </div>
+</body>
+</html>

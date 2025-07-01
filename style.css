@@ -1,0 +1,89 @@
+@media print {
+	  @page {
+		size: A4 landscape;
+		margin: 20mm;
+	  }
+
+	  body * {
+		visibility: hidden;
+	  }
+
+	  #report {
+		visibility: visible;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 90%;
+		padding: 0;
+		margin: 0;
+		text-align: left;
+		font-family: Arial, sans-serif;
+		font-size: 14px;
+		color: black;
+		white-space: pre-wrap;
+		line-height: 1.4;
+	  }
+	}
+
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      background-color: #f4f4f4;
+    }
+    h2 {
+      background-color: #0074D9;
+      color: white;
+      padding: 10px;
+    }
+    label, input, textarea {
+      margin-bottom: 10px;
+    }
+    input[type="text"], input[type="number"] {
+      padding: 5px;
+      margin-right: 10px;
+    }
+    .section {
+      background: white;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 8px 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-right: 5px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .inline {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+    .inline button {
+      background-color: #dc3545;
+    }
+    .inline button:hover {
+      background-color: #c82333;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+    .print-btn {
+      background-color: #007BFF;
+    }
+    .reset-btn {
+      background-color: #dc3545;
+    }
