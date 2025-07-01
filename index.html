@@ -5,51 +5,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ταμείο Βάρδιας Βενζινάδικου</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h2>Καταγραφή Ταμείου Βάρδιας</h2>
+  <h2>🛠 Καταγραφή Ταμείου Βάρδιας</h2>
+
+  <div class="section" style="background: #fff8dc; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+    <h3>📋 Οδηγίες Χρήσης</h3>
+    <ul>
+      <li>Συμπληρώστε τα πεδία με σειρά από πάνω προς τα κάτω.</li>
+      <li>Χρησιμοποιήστε τα πράσινα κουμπιά για να προσθέσετε γραμμές.</li>
+      <li>Τα δεδομένα αποθηκεύονται αυτόματα.</li>
+      <li>Πατήστε "Δημιουργία Αναφοράς" για να ελέγξετε και "Εκτύπωση" για αποθήκευση.</li>
+    </ul>
+  </div>
 
   <div class="section">
-    <label>Ονόματα</label>
+    <label><strong>1. Ονόματα Υπαλλήλων:</strong></label>
     <input type="text" id="employees">
-    <label>Ημερομηνία</label>
+    <label><strong>2. Ημερομηνία:</strong></label>
     <input type="date" id="date">
   </div>
 
   <div class="section">
-    <label>Πωλήσεις Λαδιών (€)</label>
+    <label><strong>3. Πωλήσεις Λαδιών (€)</strong></label>
     <div id="oilList"></div>
-    <button onclick="addItem('oilList')">+ Προσθήκη</button>
-	<br><br><br>
-    <label>Πωλήσεις Αξεσουάρ (€)</label>
+    <button onclick="addItem('oilList'); saveState();">➕ Προσθήκη Λαδιού</button>
+    <br><br><br>
+    <label><strong>4. Πωλήσεις Αξεσουάρ (€)</strong></label>
     <div id="accessoryList"></div>
-    <button onclick="addItem('accessoryList')">+ Προσθήκη</button>
+    <button onclick="addItem('accessoryList'); saveState();">➕ Προσθήκη Αξεσουάρ</button>
   </div>
 
   <div class="section">
-    <label>Πελάτες Πίστωσης / Πινακίδα / Ποσό</label>
+    <label><strong>5. Πελάτες Πίστωσης (Όνομα / Πινακίδα / Ποσό)</strong></label>
     <div id="creditTripleList"></div>
-    <button onclick="addCreditTriple()">+ Προσθήκη</button>
+    <button onclick="addCreditTriple(); saveState();">➕ Προσθήκη Πελάτη Πίστωσης</button>
   </div>
 
   <div class="section">
-    <label>Έξοδα Από Ταμείο</label>
+    <label><strong>6. Έξοδα Από Ταμείο (€)</strong></label>
     <div id="expensesList"></div>
-    <button onclick="addItem('expensesList', true)">+ Προσθήκη</button>
-	<br><br><br>
-    <label>Εισπράξεις Από Πελάτες</label>
+    <button onclick="addItem('expensesList'); saveState();">➕ Προσθήκη Εξόδου</button>
+    <br><br><br>
+    <label><strong>7. Εισπράξεις Από Πελάτες (€)</strong></label>
     <div id="collectionsList"></div>
-    <button onclick="addItem('collectionsList', true)">+ Προσθήκη</button>
+    <button onclick="addItem('collectionsList'); saveState();">➕ Προσθήκη Είσπραξης</button>
   </div>
 
-  <button onclick="generateReport()">Δημιουργία Αναφοράς</button>
-  <button class="print-btn" onclick="window.print()">Εκτύπωση</button>
-  <button class="reset-btn" onclick="resetShift()">Νέα Βάρδια</button>
+  <button onclick="generateReport()">📄 Δημιουργία Αναφοράς</button>
+  <button class="print-btn" onclick="window.print()">🖨 Εκτύπωση</button>
+  <button class="reset-btn" onclick="resetShift()">🧹 Νέα Βάρδια</button>
 
   <div class="section">
-    <h3>Αναφορά Βάρδιας</h3>
+    <h3>📊 Αναφορά Βάρδιας</h3>
     <pre id="report"></pre>
   </div>
+
+  <script>
+    // Προειδοποίηση κατά την έξοδο αν δεν έχει πατηθεί "Εκτύπωση"
+    window.addEventListener("beforeunload", function (e) {
+      e.preventDefault();
+      e.returnValue = "";
+    });
+  </script>
 </body>
 </html>

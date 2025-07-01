@@ -99,9 +99,9 @@
 		state[id].forEach(item => addItem(id, false, item.label, item.amount));
 	  }
 	  ['expensesList','collectionsList'].forEach(id => {
-		document.getElementById(id).innerHTML = '';
-		state[id].forEach(item => addItem(id, true, item));
-	  });
+      document.getElementById(id).innerHTML = '';
+      state[id].forEach(item => addItem(id, false, item.label, item.amount));
+    });
 	  document.getElementById('creditTripleList').innerHTML = '';
 	  state.creditTripleList.forEach(t => addCreditTriple(t.client, t.plate, t.amount));
 
@@ -121,42 +121,57 @@
 	  return `${dayName} ${day}/${month}/${year}`;
 	}
 
-    function generateReport() {
-      const employees = document.getElementById('employees').value;
-      const date = document.getElementById('date').value;
-	  const dateFormatted = formatFullDate(date);
-
-      const oils = collectItems('oilList');
-      const accessories = collectItems('accessoryList');
-      const credits = collectCreditTriples();
-      const expenses = collectItems('expensesList', true);
-      const collections = collectItems('collectionsList', true);
-
-      const oilTotal = oils.reduce((sum, item) => sum + item.amount, 0);
-      const accTotal = accessories.reduce((sum, item) => sum + item.amount, 0);
-      const creditTotal = credits.reduce((sum, item) => sum + item.amount, 0);
-      const totalSales = oilTotal + accTotal;
-
-      let report = `Ημερομηνία: ${dateFormatted}\n`;
-      report += `Ονόματα: ${employees}\n\n`;
-
-      report += `Πωλήσεις Λαδιών:\n`;
-      oils.forEach(o => report += `- ${o.label}: €${o.amount.toFixed(2)}\n`);
-
-      report += `\nΠωλήσεις Αξεσουάρ:\n`;
-      accessories.forEach(a => report += `- ${a.label}: €${a.amount.toFixed(2)}\n`);
-
-      report += `\nΣύνολο Πωλήσεων: €${totalSales.toFixed(2)}\n\n`;
-
-      report += `Πελάτες Πίστωσης:\n`;
-      credits.forEach(c => report += `- ${c.client} | ${c.plate} | €${c.amount.toFixed(2)}\n`);
-
-      report += `\nΈξοδα Από Ταμείο:\n` + expenses.map(e => `- ${e}`).join('\n') + '\n\n';
-      report += `Εισπράξεις Από Πελάτες:\n` + collections.map(c => `- ${c}`).join('\n') + '\n';
-
-      document.getElementById('report').textContent = report;
-      saveState();
-    }
+  function generateReport() {
+    const employees = document.getElementById('employees').value;
+    const date = document.getElementById('date').value;
+    const dateFormatted = formatFullDate(date);
+  
+    const oils = collectItems('oilList');
+    const accessories = collectItems('accessoryList');
+    const credits = collectCreditTriples();
+    const expenses = collectItems('expensesList', true);
+    const collections = collectItems('collectionsList', true);
+  
+    const oilTotal = oils.reduce((sum, item) => sum + item.amount, 0);
+    const accTotal = accessories.reduce((sum, item) => sum + item.amount, 0);
+    const creditTotal = credits.reduce((sum, item) => sum + item.amount, 0);
+    const totalSales = oilTotal + accTotal;
+  
+    let report = '';
+    report += `ΗΜΕΡΟΜΗΝΙΑ:    ${dateFormatted}\n`;
+    report += `ΟΝΟΜΑΤΑ:     ${employees}\n`;
+    report += `-------------------------------\n`;
+  
+    report += `ΠΩΛΗΣΕΙΣ ΛΑΔΙΩΝ:\n`;
+    oils.forEach(o => {
+      report += `[ ${o.label} ] [ ${o.amount.toFixed(2)} € ]  ✖\n`;
+    });
+  
+    report += `ΠΩΛΗΣΕΙΣ ΑΞΕΣΟΥΑΡ:\n`;
+    accessories.forEach(a => {
+      report += `${a.label} | ${a.amount.toFixed(2)} €\n`;
+    });
+    report += `ΣΥΝΟΛΟ ΠΩΛΗΣΕΩΝ: ${totalSales.toFixed(2)} €\n\n`;
+  
+    report += `ΠΕΛΑΤΕΣ ΠΙΣΤΩΣΗΣ:\n`;
+    credits.forEach(c => {
+      report += `[ ${c.client} ] | [ ${c.plate} ] | [ ${c.amount.toFixed(2)} € ] ✖\n`;
+    });
+    report += `ΣΥΝΟΛΟ ΠΙΣΤΩΣΕΩΝ: ${creditTotal.toFixed(2)} €\n\n`;
+  
+    report += `ΕΞΟΔΑ:\n`;
+    expenses.forEach(e => {
+      report += `[ ${e.label} ] [ ${e.amount.toFixed(2)} € ] ✖\n`;
+    });
+    report += `\nΕΙΣΠΡΑΞΕΙΣ:\n`;
+    collections.forEach(c => {
+      report += `[ ${c.label} ] [ ${c.amount.toFixed(2)} € ] ✖\n`;
+    });
+  
+    document.getElementById('report').textContent = report;
+    saveState();
+  }
+  
 
     function resetShift() {
       if (confirm("Θέλεις σίγουρα να ξεκινήσεις νέα βάρδια; Όλα τα δεδομένα θα διαγραφούν.")) {
