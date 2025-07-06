@@ -95,9 +95,16 @@
 	  document.getElementById('date').value = state.date || '';
 
 	  for (let id of ['oilList','accessoryList']) {
-		document.getElementById(id).innerHTML = '';
-		state[id].forEach(item => addItem(id, false, item.label, item.amount));
-	  }
+      document.getElementById(id).innerHTML = '';
+      state[id].forEach(item => {
+        if (typeof item === 'object') {
+          addItem(id, false, item.label, item.amount);
+        } else {
+          addItem(id, false, item, 0);
+        }
+      });
+    }
+
 	  ['expensesList','collectionsList'].forEach(id => {
       document.getElementById(id).innerHTML = '';
       state[id].forEach(item => addItem(id, false, item.label, item.amount));
@@ -107,6 +114,23 @@
 
 	  document.getElementById('report').textContent = state.report || '';
 	}
+
+  function addAutoSaveListeners() {
+  document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', saveState);
+  });
+
+  const containers = ['oilList', 'accessoryList', 'expensesList', 'collectionsList', 'creditTripleList'];
+  containers.forEach(id => {
+    const container = document.getElementById(id);
+    const observer = new MutationObserver(() => {
+      setTimeout(addAutoSaveListeners, 100); // περιμένει να μπουν νέα inputs
+      saveState(); // σώζει ό,τι αλλάζει
+    });
+    observer.observe(container, { childList: true, subtree: true });
+  });
+}
+
 	
 	function formatFullDate(dateStr) {
 	  const daysGR = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
@@ -180,4 +204,7 @@
       }
     }
 
-    window.onload = loadState;
+    window.onload = () => {
+      loadState();
+      addAutoSaveListeners();
+    };
